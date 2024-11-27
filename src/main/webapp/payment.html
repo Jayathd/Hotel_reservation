@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Payment Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('./images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px; /* Increased the height */
+            transition: 0.5s all ease-in;
+            list-style: none;
+            margin: 0;
+            padding: 10px 0; /* Added padding */
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: white;
+            font-size: 1.1rem;
+            padding: 10px 15px; /* Adjusted padding */
+            margin: 0 20px;
+            text-decoration: none;
+            transition: all 0.5s ease;
+        }
+
+        .navbar a:hover {
+            color: rgba(0, 255, 55, 0.881);
+            border: 1px solid rgba(0, 255, 55, 0.881);
+            padding: 10px 20px;
+            transition: color 0.3s ease, border 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 180px; /* Increased padding-top to avoid overlap */
+            overflow-y: auto;
+            max-height: calc(100vh - 120px); /* Adjusted max-height */
+        }
+
+        .payment-card {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h3,
+        label,
+        .title {
+            color: white;
+        }
+
+        .form-control {
+            border-radius: 30px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #d3d3d3;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: none;
+        }
+
+        .submit-btn {
+            border-radius: 30px;
+            padding: 10px 20px;
+            width: 100%;
+            background-color: #00b4d8;
+            border: none;
+            transition: background-color 0.3s ease;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #0077b6;
+        }
+        
+        a {
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+            color: #fff;
+            text-decoration: none;
+            background-color: #0077b6;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .inputBox {
+            margin: 15px 0;
+        }
+
+        .inputBox span {
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            const cardNumber = document.querySelector('input[name="cardnumber"]').value;
+            const amount = document.querySelector('input[name="amount"]').value;
+
+            // Validate card number format (simple check for digits only)
+            const cardNumberPattern = /^[0-9\s]+$/;
+            if (!cardNumber.match(cardNumberPattern) || cardNumber.replace(/\s/g, '').length !== 16) {
+                alert('Please enter a valid card number (16 digits).');
+                return false;
+            }
+
+            // Validate amount (should be a positive number)
+            const amountValue = parseFloat(amount);
+            if (isNaN(amountValue) || amountValue <= 0) {
+                alert('Please enter a valid amount.');
+                return false;
+            }
+
+            return true; // Proceed with form submission if all validations pass
+        }
+    </script>
+</head>
+
+<body>
+    <div class="backGround"></div>
+    <ul class="navbar">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="reg.html">Register</a></li>
+        <li><a href="book.html">Vehicle Registration</a></li>
+        <li><a href="payment.html">Payment</a></li>
+    </ul>
+
+    <div class="container">
+        <div class="payment-card">
+            <h3 class="text-center">Payment Details</h3>
+            <form action="PaySaveServlet" method="post" onsubmit="return validateForm();">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="title">User Details</h3>
+                        <div class="inputBox">
+                            <span>Full Name:</span>
+                            <input type="text" class="form-control" name="name" placeholder="Full Name" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Email:</span>
+                            <input type="email" class="form-control" name="email" placeholder="example@example.com" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Passport ID:</span>
+                            <input type="text" class="form-control" name="passportid" placeholder="Passport ID" required pattern="^[A-Z0-9]{6,9}$" title="Passport ID should be 6-9 characters long (alphanumeric).">
+                        </div>
+                        <div class="inputBox">
+                            <span>Amount:</span>
+                            <input type="number" class="form-control" name="amount" placeholder="Amount" required min="0.01 step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h3 class="title">Payment</h3>
+                        
+                        <div class="inputBox">
+                            <span>Card Name:</span>
+                            <input type="text" class="form-control" name="cardname" placeholder="Enter name" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Card Number:</span>
+                            <input type="text" class="form-control" name="cardnumber" placeholder="1111-2222-3333-4444" maxlength="19" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>Exp Month:</span>
+                            <input type="text" class="form-control" name="expmonth" placeholder="January" required pattern="^(0[1-9]|1[0-2])$" title="Enter a valid month (01-12).">
+                        </div>
+                        <div class="d-flex">
+                            <div class="inputBox flex-grow-1 me-2">
+                                <span>Exp Year:</span>
+                                <input type="text" class="form-control" name="expyear" placeholder="2023" maxlength="4" required pattern="^\d{4}$" title="Enter a valid year (YYYY).">
+                            </div>
+                            <div class="inputBox flex-grow-1">
+                                <span>CVV:</span>
+                                <input type="password" class="form-control" name="cvv" placeholder="123" maxlength="3" required pattern="^\d{3}$" title="Enter a valid CVV (3 digits).">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Proceed to Checkout" class="submit-btn">
+                <a href="PayViewServlet">View Payment Details</a>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="ISO-8859-1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback</title>
+  <style>
+    /* Keeping the navbar styles intact */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      transition: 0.5s all ease-in;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Poppins", sans-serif;
+      z-index: 3;
+    }
+
+    .navbar li {
+      display: inline-block;
+    }
+
+    .navbar a {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 5px 10px;
+      margin: 0 20px;
+      text-decoration: none;
+      transition: all 0.5s ease;
+    }
+
+    .navbar a:hover {
+      color: rgba(0, 255, 55, 0.881);
+      border: 1px solid rgba(0, 255, 55, 0.881);
+      padding: 10px 15px;
+      transition: color 0.3s ease, border 0.3s ease;
+    }
+
+    .logo {
+      position: absolute;
+      left: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .logo img {
+      width: 90px;
+      border-radius: 50%;
+      height: auto;
+    }
+  </style>
+</head>
+<body style="background-color: #efefef; font-family: sans-serif; background-image: url('images/background.jpg'); background-size: cover; background-attachment: fixed; margin: 0; padding: 0; margin-top: 80px;">
+
+  <!-- Navbar -->
+  <ul class="navbar">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="reg.html">Register</a></li>
+    <li><a href="book.html">Vehicle Registration</a></li>
+    <li><a href="payment.html">Payment</a></li>
+  </ul>
+
+  <!-- Feedback Form -->
+  <div style="width: 500px; max-width: 400px; background-color: rgba(255, 255, 255, 0.8); padding: 30px; margin: 10% auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+    <h3 style="text-align: center; font-size: 28px; color: #333; margin-bottom: 20px;">Feedback</h3>
+    <form action="FeedSaveServlet" method="POST" onsubmit="return validateForm()">
+      <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+      <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+      <input type="text" name="phonenumber" placeholder="Your Phone Number" required pattern="\d{10}" title="Phone number must be 10 digits." style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+      <textarea name="message" placeholder="Your Message" required style="width: 100%; height: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; outline: none; margin-bottom: 15px;"></textarea>
+      <button type="submit" style="width: 100%; background-color: #007bff; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 14px;">Submit</button>
+      
+      <!-- New button to navigate to FeedViewServlet -->
+      <button type="button" onclick="window.location.href='FeedViewServlet';" style="width: 100%; background-color: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-top: 15px; transition: background-color 0.3s ease; font-size: 14px;">View Feedback</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      const name = document.forms[0]["name"].value;
+      const email = document.forms[0]["email"].value;
+      const phone = document.forms[0]["phonenumber"].value;
+      const message = document.forms[0]["message"].value;
+
+      // Check if name contains only letters and spaces
+      if (!/^[a-zA-Z\s]+$/.test(name)) {
+        alert("Please enter a valid name (letters and spaces only).");
+        return false;
+      }
+
+      // Check if phone number is exactly 10 digits
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Phone number must be 10 digits.");
+        return false;
+      }
+
+      // Optional: Add more checks here as needed
+
+      return true; // Form is valid
+    }
+  </script>
+</body>
+</html>

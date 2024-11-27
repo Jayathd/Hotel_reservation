@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ExploreGuides User Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /* Full-screen blurred background styling */
+        .backGround {
+            background-image: url("images/background.jpg");
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: -1;
+            filter: blur(5px); /* Increasing blur for a clean look */
+        }
+
+        /* Center the form container */
+        .form-container {
+            position: relative;
+            z-index: 1;
+            max-width: 400px;
+            margin: 10% auto; /* Center vertically and horizontally */
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding a subtle shadow */
+        }
+
+        /* Form heading */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333; /* Dark gray for modern look */
+        }
+
+        /* Form fields */
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Submit button styling */
+        input[type="submit"] {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect on button */
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* View link */
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="backGround"></div>
+
+    <!-- Registration Form Container -->
+    <div class="form-container">
+        <h1>User Registration</h1> <!-- Form title -->
+
+        <form id="registration-form" action="RegSaveServlet" method="post">
+            <label for="First_name">First Name:</label>
+            <input type="text" id="fristname" name="fristname" required>
+
+            <label for="Last_name">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+
+            <label for="NIC">NIC:</label>
+            <input type="text" id="nic" name="nic" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="repassword" name="repassword" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="birthdate">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="country">Country:</label>
+            <select id="country" name="country">
+                <option value="usa">United States</option>
+                <option value="canada">Canada</option>
+                <option value="UK">United Kingdom</option>
+                <option value="LK">Sri Lanka</option>
+                <option value="India">India</option>
+            </select>
+
+            <label for="newsletter">Subscribe to Newsletter:</label>
+            <input type="checkbox" id="newsletter" name="newsletter">
+
+            <input type="submit" value="Register"onclick="location.href='login.html'"> <!-- Register button -->
+        </form>
+
+        <a href="RegViewServlet">View Registered Users</a>
+        <a href="login.html">Login</a> <!-- Link to view registered users -->
+    </div>
+
+    <!-- Optional JavaScript validation logic -->
+    <script>
+        
+    </script>
+
+</body>
+<script>
+    document.getElementById('registration-form').addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // Validate First Name (only letters, required)
+        const firstName = document.getElementById('fristname').value;
+        const firstNamePattern = /^[A-Za-z]+$/;
+        if (!firstNamePattern.test(firstName)) {
+            alert("First name must contain only letters.");
+            isValid = false;
+        }
+
+        // Validate Last Name (only letters, required)
+        const lastName = document.getElementById('lastname').value;
+        if (!firstNamePattern.test(lastName)) {
+            alert("Last name must contain only letters.");
+            isValid = false;
+        }
+
+        // Validate NIC (example: simple alphanumeric format check)
+        const nic = document.getElementById('nic').value;
+        const nicPattern = /^[A-Za-z0-9]+$/;
+        if (!nicPattern.test(nic)) {
+            alert("NIC must contain only letters and numbers.");
+            isValid = false;
+        }
+
+        // Validate Email (HTML5 validation will catch this but you can do a custom check)
+        const email = document.getElementById('email').value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            isValid = false;
+        }
+
+        // Validate Password (at least 8 characters, one number, one special character)
+        const password = document.getElementById('password').value;
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (!passwordPattern.test(password)) {
+            alert("Password must be at least 8 characters long and contain one number and one special character.");
+            isValid = false;
+        }
+
+        // Validate Confirm Password (must match password)
+        const confirmPassword = document.getElementById('repassword').value;
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            isValid = false;
+        }
+
+        // Validate Phone Number (only digits, required)
+        const phone = document.getElementById('phone').value;
+        const phonePattern = /^[0-9]{10,15}$/;
+        if (!phonePattern.test(phone)) {
+            alert("Phone number must contain only digits and be 10-15 digits long.");
+            isValid = false;
+        }
+
+        // Validate Date of Birth (must be a valid date and in the past)
+        const dob = new Date(document.getElementById('dob').value);
+        const today = new Date();
+        if (dob >= today) {
+            alert("Date of birth must be a date in the past.");
+            isValid = false;
+        }
+
+        // Prevent form submission if there are validation errors
+        if (!isValid) {
+            event.preventDefault();
+        } else {
+            alert("Registered Successfully");
+        }
+    });
+</script>
+
+</html>
+
